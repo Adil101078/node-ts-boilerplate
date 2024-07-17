@@ -2,13 +2,13 @@ import '@core/declarations'
 import requestValidator from '@helpers/request-validator.helper'
 import { Request, Response } from 'express'
 import bcrypt from 'bcrypt'
-import UpdatePasswordDTO from '../dtos/update-password.dto'
+import {UpdatePasswordDTO} from '../dtos/update-password.dto'
 
 export default async function _UpdatePassword(req: Request, res: Response) {
-  // const errors = await requestValidator(UpdatePasswordDTO, req.body)
-  // if (errors) {
-  //   return res.unprocessableEntity({ errors })
-  // }
+  const errors = await requestValidator(UpdatePasswordDTO, req.body)
+  if (errors) {
+    return res.unprocessableEntity({ errors })
+  }
 
   const { oldPassword, newPassword } = req.body
   const { user: __user } = req

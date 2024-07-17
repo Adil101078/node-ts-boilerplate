@@ -7,13 +7,13 @@ import {
 } from '@models/code-verification'
 import { Request, Response } from 'express'
 import Dayjs from 'dayjs'
-import ForgotPasswordResetDTO from '../dtos/forgot-password-reset.dto'
+import {ForgotPasswordResetDTO} from '../dtos/forgot-password-reset.dto'
 
 export default async function ForgotPasswordReset(req: Request, res: Response) {
-  // const errors = await requestValidator(ForgotPasswordResetDTO, req.body)
-  // if (errors) {
-  //   return res.unprocessableEntity({ errors })
-  // }
+  const errors = await requestValidator(ForgotPasswordResetDTO, req.body)
+  if (errors) {
+    return res.unprocessableEntity({ errors })
+  }
 
   const { _codeVerification, password } = req.body
 

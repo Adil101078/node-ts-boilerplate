@@ -37,10 +37,10 @@ export default async function CodeVerificationRequest(
   req: Request,
   res: Response
 ) {
-  // const errors = await requestValidator(RequestDTO, req.body)
-  // if (errors) {
-  //   return res.unprocessableEntity({ errors })
-  // }
+  const errors = await requestValidator(RequestDTO, req.body)
+  if (errors) {
+    return res.unprocessableEntity({ errors })
+  }
 
   const {
     email,
@@ -65,21 +65,21 @@ export default async function CodeVerificationRequest(
 
   // validations by purpose type PRE_SIGNUP
   if (purpose === CodeVerificationPurpose.PRE_SIGNUP) {
-    // const errors = await requestValidator(RequestByEmailOrPhoneDTO, req.body)
-    // if (errors) {
-    //   return res.unprocessableEntity({ errors })
-    // }
+    const errors = await requestValidator(RequestByEmailOrPhoneDTO, req.body)
+    if (errors) {
+      return res.unprocessableEntity({ errors })
+    }
   }
 
   // validations by purpose type FORGOT_PASSWORD
   if (purpose === CodeVerificationPurpose.FORGOT_PASSWORD) {
-    // const errors = await requestValidator(
-    //   RequestByEmailForgotPasswordDTO,
-    //   req.body
-    // )
-    // if (errors) {
-    //   return res.unprocessableEntity({ errors })
-    // }
+    const errors = await requestValidator(
+      RequestByEmailForgotPasswordDTO,
+      req.body
+    )
+    if (errors) {
+      return res.unprocessableEntity({ errors })
+    }
 
     // Fetch the user with email id
     if (payload.email) {
@@ -120,13 +120,13 @@ export default async function CodeVerificationRequest(
 
   // validations by purpose type USER_PHONE_UPDATE
   if (purpose === CodeVerificationPurpose.USER_PHONE_UPDATE) {
-    // const errors = await requestValidator(RequestByPhoneDTO, {
-    //   phone,
-    //   countryCode,
-    // })
-    // if (errors) {
-    //   return res.unprocessableEntity({ errors })
-    // }
+    const errors = await requestValidator(RequestByPhoneDTO, {
+      phone,
+      countryCode,
+    })
+    if (errors) {
+      return res.unprocessableEntity({ errors })
+    }
 
     const existingUserCount = await App.Models.User.countDocuments({
       phone,
@@ -141,13 +141,13 @@ export default async function CodeVerificationRequest(
 
   // validations by purpose type SIGNIN_2FA
   if (purpose === CodeVerificationPurpose.SIGNIN_2FA) {
-    // const errors = await requestValidator(RequestForSignin2FADTO, {
-    //   _user,
-    //   twoFactorAuthenticationCode,
-    // })
-    // if (errors) {
-    //   return res.unprocessableEntity({ errors })
-    // }
+    const errors = await requestValidator(RequestForSignin2FADTO, {
+      _user,
+      twoFactorAuthenticationCode,
+    })
+    if (errors) {
+      return res.unprocessableEntity({ errors })
+    }
 
     existingUser = await App.Models.User.findOne({
       _id: _user,

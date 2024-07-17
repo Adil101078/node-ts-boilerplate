@@ -5,13 +5,13 @@ import {
   CodeVerificationPurpose,
   CodeVerificationStatus,
 } from '@models/code-verification'
-import UpdatePhoneNumberdDTO from '../dtos/update-phone-number.dto '
+import { UpdatePhoneNumberdDTO } from '../dtos/update-phone-number.dto '
 
 export default async function _UpdatePhoneNumber(req: Request, res: Response) {
-  // const errors = await requestValidator(UpdatePhoneNumberdDTO, req.params)
-  // if (errors) {
-  //   return res.unprocessableEntity({ errors })
-  // }
+  const errors = await requestValidator(UpdatePhoneNumberdDTO, req.params)
+  if (errors) {
+    return res.unprocessableEntity({ errors })
+  }
 
   const { _codeVerification } = req.params
   const { user: __user } = req

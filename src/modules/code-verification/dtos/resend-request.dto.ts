@@ -1,7 +1,9 @@
 import '@core/declarations'
-import { IsMongoId } from 'class-validator'
+import Joi from 'joi'
+import objectIdValidatorHelper from '@helpers/object-id-validator.helper'
 
-export default class ResendRequestDTO {
-  @IsMongoId()
-  _codeVerification: string
-}
+export const ResendRequestDTO = Joi.object({
+  _codeVerification: Joi.string()
+    .custom(objectIdValidatorHelper.Validate, 'ObjectId Validation')
+    .required(),
+})

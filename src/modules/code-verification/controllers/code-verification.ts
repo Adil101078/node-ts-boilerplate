@@ -92,10 +92,9 @@ export default async function CodeVerification(req: Request, res: Response) {
       // Issue JWT to the user
       return res.success({
         message: App.Messages.Signin.Success.SigninSuccessful(),
-        isFirstLogin: false,
-        token,
         item: {
           sessionIdentifier: loginSessions.current.sessionIdentifier,
+          token,
         },
       })
     }

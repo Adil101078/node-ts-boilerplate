@@ -2,15 +2,16 @@ import '@core/declarations'
 import _ from 'lodash'
 import requestValidator from '@helpers/request-validator.helper'
 import { Request, Response } from 'express'
-import ResendRequestDTO from '../dtos/resend-request.dto'
+import { ResendRequestDTO } from '../dtos/resend-request.dto'
+
 export default async function CodeVerificationResendRequest(
   req: Request,
   res: Response
 ) {
-  // const errors = await requestValidator(ResendRequestDTO, req.params)
-  // if (errors) {
-  //   return res.unprocessableEntity({ errors })
-  // }
+  const errors = await requestValidator(ResendRequestDTO, req.params)
+  if (errors) {
+    return res.unprocessableEntity({ errors })
+  }
 
   const { _codeVerification } = req.params
 

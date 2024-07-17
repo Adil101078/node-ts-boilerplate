@@ -1,7 +1,9 @@
 import '@core/declarations'
-import { IsMongoId } from 'class-validator'
+import MongoId from '@helpers/object-id-validator.helper'
+import Joi from 'joi'
 
-export default class UpdatePhoneNumberdDTO {
-  @IsMongoId()
-  _codeVerification: string
-}
+export const UpdatePhoneNumberdDTO = Joi.object({
+  _codeVerification: Joi.string()
+    .custom(MongoId.Validate, 'ObjectId Validation')
+    .required(),
+})

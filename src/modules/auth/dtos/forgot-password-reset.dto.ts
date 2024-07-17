@@ -1,21 +1,19 @@
 import '@core/declarations'
-import {
-  IsMongoId,
-  IsString,
-  Matches,
-  MaxLength,
-  MinLength,
-} from 'class-validator'
+import MongoId from '@helpers/object-id-validator.helper'
+import Joi from 'joi'
 
-export default class ForgotPasswordResetDTO {
-  @IsMongoId()
-  _codeVerification: string
-
-  @IsString()
-  @MinLength(8)
-  @MaxLength(16)
-  @Matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@!])[A-Za-z\d@!]+$/, {
-    message: App.Messages.ClassValidatorMessages.InvalidPassword(),
-  })
-  password: string
-}
+export const ForgotPasswordResetDTO = Joi.object({
+  _codeVerification: Joi.string()
+    .custom(MongoId.Validate, 'ObjectId Validation')
+    .required(),
+  password: Joi.string()
+    .min(8)
+    .max(16)
+    .pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@!])[A-Za-z\d@!]+$/, {
+      name: 'Password',
+    })
+    .message(
+      'Invalid password: must contain at least one lowercase letter, one uppercase letter, one digit, and one special character (@!).'
+    )
+    .required(),
+})
